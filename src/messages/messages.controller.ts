@@ -15,10 +15,8 @@ export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Get()
-  findAll(@Query() pagination: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { limit = 10, offset = 0 } = pagination;
-    return `Retorna todos os recados. Limit=${limit}, Offset=${offset}`;
+  findAll(@Query() pagination: { limit: number; offset: number }) {
+    return this.messagesService.findAll(pagination);
   }
 
   @Get(':id')
@@ -28,19 +26,16 @@ export class MessagesController {
 
   @Post()
   create(@Body() body: any): any {
-    return body;
+    return this.messagesService.create(body);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() body: any): any {
-    return {
-      id,
-      ...body,
-    };
+    return this.messagesService.update(id, body);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return `cabra com o id:${id} foi deletado`;
+    return this.messagesService.remove(id);
   }
 }
