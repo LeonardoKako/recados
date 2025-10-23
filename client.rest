@@ -1,0 +1,28 @@
+@baseurl = http://localhost:3000/messages
+
+### Messages findAll()
+GET {{baseurl}}
+
+### Messages findOne()
+GET {{baseurl}}/1
+
+### Messages Post()
+POST {{baseurl}}
+Content-Type: application/json
+
+{
+    "message": "Este é o recado que estou enviando",
+    "nova chave": "outro valor"
+}
+
+### Messages Patch(id)
+PATCH {{baseurl}}/1
+Content-Type: application/json
+
+{
+    "message": "Este é o recado que estou enviando",
+    "atualizar": true
+}
+
+### Messages Remove(id)
+DELETE {{baseurl}}/1
