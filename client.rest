@@ -6,25 +6,31 @@ GET {{baseurl}}/
 &offset=100
 
 ### Messages findOne()
-GET {{baseurl}}/1
+GET {{baseurl}}/2
 
 ### Messages Post()
 POST {{baseurl}}
 Content-Type: application/json
 
 {
-    "message": "Este é o recado que estou enviando",
-    "nova chave": "outro valor"
-}
+    "texto": "Novo recado",
+    "de": "Leonardo",
+    "para": "João",
+    "lido": false,
+    "data": "2025-10-23T14:27:36.826Z"
+  }
 
 ### Messages Patch(id)
-PATCH {{baseurl}}/1
+PATCH {{baseurl}}/2
 Content-Type: application/json
 
 {
-    "message": "Este é o recado que estou enviando",
-    "atualizar": true
-}
+    "texto": "Novo recado ATUALIZADO",
+    "de": "Leonardo",
+    "para": "João",
+    "lido": false,
+    "data": "2025-10-23T14:27:36.826Z"
+  }
 
 ### Messages Remove(id)
-DELETE {{baseurl}}/1
+DELETE {{baseurl}}/2
