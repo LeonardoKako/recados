@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 
@@ -14,8 +15,10 @@ export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Get()
-  findAll() {
-    return this.messagesService.findAll();
+  findAll(@Query() pagination: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const { limit = 10, offset = 0 } = pagination;
+    return `Retorna todos os recados. Limit=${limit}, Offset=${offset}`;
   }
 
   @Get(':id')

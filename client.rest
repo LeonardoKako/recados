@@ -1,7 +1,9 @@
 @baseurl = http://localhost:3000/messages
 
 ### Messages findAll()
-GET {{baseurl}}
+GET {{baseurl}}/
+?limit=100
+&offset=100
 
 ### Messages findOne()
 GET {{baseurl}}/1
