@@ -6,18 +6,18 @@ import {
   Param,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
-import { Message } from './entities/message.entity';
+import { CreateMessageDto } from './dto/create-message.dto';
+import { UpdateMessageDto } from './dto/update-message.dto';
 
 @Controller('messages')
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Get()
-  findAll(@Query() pagination: { limit: number; offset: number }) {
-    return this.messagesService.findAll(pagination);
+  findAll() {
+    return this.messagesService.findAll();
   }
 
   @Get(':id')
@@ -26,13 +26,13 @@ export class MessagesController {
   }
 
   @Post()
-  create(@Body() body: any) {
-    return this.messagesService.create(body);
+  create(@Body() createMessageDto: CreateMessageDto) {
+    return this.messagesService.create(createMessageDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body: any) {
-    this.messagesService.update(id, body);
+  update(@Param('id') id: string, @Body() updateMessageDto: UpdateMessageDto) {
+    this.messagesService.update(id, updateMessageDto);
     return 'Recado atualizado';
   }
 

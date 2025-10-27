@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Message } from './entities/message.entity';
+import { CreateMessageDto } from './dto/create-message.dto';
+import { UpdateMessageDto } from './dto/update-message.dto';
 
 @Injectable()
 export class MessagesService {
@@ -18,10 +17,8 @@ export class MessagesService {
     },
   ];
 
-  findAll(pagination: { limit: number; offset: number }) {
-    const { limit = 10, offset = 0 } = pagination;
+  findAll() {
     return this.messages;
-    // return `Retorna todos os recados. Limit=${limit}, Offset=${offset}`;
   }
 
   findOne(id: string) {
@@ -33,12 +30,14 @@ export class MessagesService {
     throw new NotFoundException('Recado não encontrado');
   }
 
-  create(body: any) {
+  create(createMessageDto: CreateMessageDto) {
     this.lastId++;
     const id = this.lastId;
     const newMessage = {
       id,
-      ...body,
+      ...createMessageDto,
+      lido: false,
+      data: new Date(),
     };
 
     this.messages.push(newMessage);
@@ -46,7 +45,7 @@ export class MessagesService {
     return newMessage;
   }
 
-  update(id: string, body: any) {
+  update(id: string, updateMessageDto: UpdateMessageDto) {
     const messageExistsIndex = this.messages.findIndex((i) => i.id === +id);
 
     if (messageExistsIndex < 0) {
@@ -56,7 +55,7 @@ export class MessagesService {
     const messageExists = this.messages[messageExistsIndex];
     this.messages[messageExistsIndex] = {
       ...messageExists,
-      ...body,
+      ...updateMessageDto,
     };
 
     return this.messages[messageExistsIndex];
