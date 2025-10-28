@@ -1,0 +1,32 @@
+@baseurl = http://localhost:3000/persons
+
+### Persons findAll()
+GET {{baseurl}}/
+?limit=100
+&offset=100
+
+### Persons findOne()
+GET {{baseurl}}/2
+
+### Persons Post()
+POST {{baseurl}}
+Content-Type: application/json
+
+{
+    "name": "Leonardo",
+    "email": "leo@gmail.com",
+    "password": "senha123"
+  }
+
+### Persons Patch(id)
+PATCH {{baseurl}}/2
+Content-Type: application/json
+
+{
+    "texto": "Novo recado ATUALIZADO",
+    "de": "Leonardo",
+    "para": "João"
+  }
+
+### Persons Remove(id)
+DELETE {{baseurl}}/2
