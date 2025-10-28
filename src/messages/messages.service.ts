@@ -12,25 +12,18 @@ export class MessagesService {
     private readonly messageRepository: Repository<Message>,
   ) {}
 
-  private lastId = 1;
-  private messages: Message[] = [
-    {
-      id: 1,
-      texto: 'Este é um recado de teste',
-      de: 'Leonardo',
-      para: 'João',
-      lido: false,
-      data: new Date(),
-    },
-  ];
-
   async findAll() {
     const messages = await this.messageRepository.find();
     return messages;
   }
 
-  findOne(id: number) {
-    const message = this.messages.find((i) => i.id === +id);
+  async findOne(id: number) {
+    // const message = this.messages.find((i) => i.id === +id);
+    const message = await this.messageRepository.findOne({
+      where: {
+        id,
+      },
+    });
 
     if (message) return message;
 
@@ -39,47 +32,37 @@ export class MessagesService {
   }
 
   create(createMessageDto: CreateMessageDto) {
-    this.lastId++;
-    const id = this.lastId;
     const newMessage = {
-      id,
       ...createMessageDto,
       lido: false,
       data: new Date(),
     };
 
-    this.messages.push(newMessage);
+    const message = this.messageRepository.create(newMessage);
 
-    return newMessage;
+    return this.messageRepository.save(message);
   }
 
-  update(id: number, updateMessageDto: UpdateMessageDto) {
-    const messageExistsIndex = this.messages.findIndex((i) => i.id === +id);
-
-    if (messageExistsIndex < 0) {
-      throw new NotFoundException('Recado não encontrado');
-    }
-
-    const messageExists = this.messages[messageExistsIndex];
-    this.messages[messageExistsIndex] = {
-      ...messageExists,
-      ...updateMessageDto,
+  async update(id: number, updateMessageDto: UpdateMessageDto) {
+    const partialUpdateMessageDto = {
+      lido: updateMessageDto?.lido,
+      texto: updateMessageDto?.texto,
     };
+    const message = await this.messageRepository.preload({
+      id,
+      ...partialUpdateMessageDto,
+    });
 
-    return this.messages[messageExistsIndex];
+    if (message) return this.messageRepository.save(message);
+
+    throw new NotFoundException('Recado não encontrado');
   }
 
-  remove(id: number) {
-    const messageExistsIndex = this.messages.findIndex((i) => i.id === +id);
+  async remove(id: number) {
+    const message = await this.messageRepository.findOneBy({ id });
 
-    if (messageExistsIndex < 0) {
-      throw new NotFoundException('Recado não encontrado');
-    }
+    if (message) return this.messageRepository.remove(message);
 
-    const message = this.messages[messageExistsIndex];
-
-    this.messages.splice(messageExistsIndex, 1);
-
-    return message;
+    throw new NotFoundException('Recado não encontrado');
   }
 }

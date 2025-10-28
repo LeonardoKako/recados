@@ -25,9 +25,7 @@ Content-Type: application/json
 {
     "texto": "Novo recado ATUALIZADO",
     "de": "Leonardo",
-    "para": "João",
-    "lido": false,
-    "data": "2025-10-23T14:27:36.826Z"
+    "para": "João"
   }
 
 ### Messages Remove(id)

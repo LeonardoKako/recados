@@ -36,8 +36,7 @@ export class MessagesController {
     @Param('id', ParseIntPipe) id: number,
     @Body() updateMessageDto: UpdateMessageDto,
   ) {
-    this.messagesService.update(id, updateMessageDto);
-    return 'Recado atualizado';
+    return this.messagesService.update(id, updateMessageDto);
   }
 
   @Delete(':id')
