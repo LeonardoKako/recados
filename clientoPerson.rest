@@ -19,14 +19,13 @@ Content-Type: application/json
   }
 
 ### Persons Patch(id)
-PATCH {{baseurl}}/2
+PATCH {{baseurl}}/8
 Content-Type: application/json
 
 {
-    "texto": "Novo recado ATUALIZADO",
-    "de": "Leonardo",
-    "para": "João"
+    "name": "Leonardo",
+    "password": "outraSenha"
   }
 
 ### Persons Remove(id)
-DELETE {{baseurl}}/2
+DELETE {{baseurl}}/5
