@@ -14,8 +14,8 @@ Content-Type: application/json
 
 {
     "texto": "Novo recado",
-    "de": "Leonardo",
-    "para": "João"
+    "deId": 1,
+    "paraId": 1
   }
 
 ### Messages Patch(id)
