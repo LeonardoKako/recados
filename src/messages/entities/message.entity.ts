@@ -30,14 +30,14 @@ export class Message {
   updatedAt?: Date;
 
   // Muitos recados podem ser enviados por uma unica pessoa(emissor)
-  @ManyToOne(() => Person)
-  //Especifica a coluna 'de' que armazena o Id da pessoa que enviou o recado
+  @ManyToOne(() => Person, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  // Especifica a coluna 'de' que armazena o Id da pessoa que enviou o recado
   @JoinColumn({ name: 'de' })
   de: Person;
 
   // Muitos recados podem ser enviados para uma unica pessoa(destinatário)
-  @ManyToOne(() => Person)
-  //Especifica a coluna 'para' que armazena o Id da pessoa que enviou o recado
+  @ManyToOne(() => Person, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  // Especifica a coluna 'para' que armazena o Id da pessoa que enviou o recado
   @JoinColumn({ name: 'para' })
-  para: string;
+  para: Person;
 }

@@ -14,18 +14,17 @@ Content-Type: application/json
 
 {
     "texto": "Novo recado",
-    "deId": 1,
-    "paraId": 1
+    "deId": 8,
+    "paraId": 8
   }
 
 ### Messages Patch(id)
-PATCH {{baseurl}}/2
+PATCH {{baseurl}}/14
 Content-Type: application/json
 
 {
     "texto": "Novo recado ATUALIZADO",
-    "de": "Leonardo",
-    "para": "João"
+    "lido": true
   }
 
 ### Messages Remove(id)

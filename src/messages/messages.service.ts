@@ -15,7 +15,23 @@ export class MessagesService {
   ) {}
 
   async findAll() {
-    const messages = await this.messageRepository.find();
+    const messages = await this.messageRepository.find({
+      relations: ['de', 'para'],
+      order: {
+        id: 'desc',
+      },
+      select: {
+        de: {
+          id: true,
+          name: true,
+        },
+        para: {
+          id: true,
+          name: true,
+        },
+      },
+    });
+
     return messages;
   }
 
@@ -25,12 +41,23 @@ export class MessagesService {
       where: {
         id,
       },
+      relations: ['de', 'para'],
+      select: {
+        de: {
+          id: true,
+          name: true,
+        },
+        para: {
+          id: true,
+          name: true,
+        },
+      },
     });
 
-    if (message) return message;
-
     // throw new HttpException('Recado não encontrado', 404);
-    throw new NotFoundException('Recado não encontrado');
+    if (!message) throw new NotFoundException('Recado não encontrado');
+
+    return message;
   }
 
   async create(createMessageDto: CreateMessageDto) {
@@ -40,29 +67,35 @@ export class MessagesService {
     const para = await this.personsService.findOne(paraId);
 
     const newMessage = {
-      ...createMessageDto,
+      texto: createMessageDto.texto,
+      de,
+      para,
       lido: false,
       data: new Date(),
     };
 
     const message = this.messageRepository.create(newMessage);
+    await this.messageRepository.save(message);
 
-    return this.messageRepository.save(message);
+    return {
+      ...message,
+      de: {
+        id: message.de.id,
+      },
+      para: {
+        id: message.para.id,
+      },
+    };
   }
 
   async update(id: number, updateMessageDto: UpdateMessageDto) {
-    const partialUpdateMessageDto = {
-      lido: updateMessageDto?.lido,
-      texto: updateMessageDto?.texto,
-    };
-    const message = await this.messageRepository.preload({
-      id,
-      ...partialUpdateMessageDto,
-    });
+    const message = await this.findOne(id);
 
-    if (message) return this.messageRepository.save(message);
+    message.texto = updateMessageDto?.texto ?? message.texto;
+    message.lido = updateMessageDto?.lido ?? message.lido;
 
-    throw new NotFoundException('Recado não encontrado');
+    await this.messageRepository.save(message);
+    return message;
   }
 
   async remove(id: number) {
