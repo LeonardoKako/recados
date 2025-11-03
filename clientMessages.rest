@@ -2,8 +2,8 @@
 
 ### Messages findAll()
 GET {{baseurl}}/
-?limit=100
-&offset=100
+?limit=5
+&offset=0
 
 ### Messages findOne()
 GET {{baseurl}}/2
