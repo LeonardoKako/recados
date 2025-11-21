@@ -6,16 +6,16 @@ GET {{baseurl}}/
 &offset=0
 
 ### Messages findOne()
-GET {{baseurl}}/2
+GET {{baseurl}}/1
 
 ### Messages Post()
 POST {{baseurl}}
 Content-Type: application/json
 
 {
-    "texto": "Novo recado",
-    "deId": 8,
-    "paraId": 8
+    "texto": "Oieeee",
+    "deId": 1,
+    "paraId": 2
   }
 
 ### Messages Patch(id)
