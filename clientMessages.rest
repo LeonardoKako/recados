@@ -6,7 +6,7 @@ GET {{baseurl}}/
 &offset=0
 
 ### Messages findOne()
-GET {{baseurl}}/1
+GET {{baseurl}}/10
 
 ### Messages Post()
 POST {{baseurl}}
