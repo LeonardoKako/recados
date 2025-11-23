@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -23,7 +24,9 @@ export class MessagesController {
   @Get()
   async findAll(@Query() pagintanionDto: PaginationDto) {
     const message = await this.messagesService.findAll(pagintanionDto);
-    return message;
+    // return message;
+
+    throw new BadRequestException('Mensagem');
   }
 
   @Get(':id')
