@@ -1,18 +1,9 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MessagesModule } from './messages/messages.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PersonsModule } from './persons/persons.module';
-import { SimpleMiddleware } from './common/middlewares/simple.middleware';
-import { APP_FILTER } from '@nestjs/core';
-import { MyExceptionFilter } from './common/filters/my-exception.filter';
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({
