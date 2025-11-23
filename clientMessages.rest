@@ -4,6 +4,7 @@
 GET {{baseurl}}/
 ?limit=5
 &offset=0
+Authorization: Bearer 123456
 
 ### Messages findOne()
 GET {{baseurl}}/10

@@ -6,13 +6,20 @@ import {
   ExecutionContext,
   Injectable,
   NestInterceptor,
+  UnauthorizedException,
 } from '@nestjs/common';
 
 @Injectable()
-export class AddHeaderInterceptor implements NestInterceptor {
+export class AuthTokenInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler<any>) {
-    const response = context.switchToHttp().getResponse();
-    response.setHeader('X-Custom-Header', 'O valor do cabeçalho');
+    const request = context.switchToHttp().getRequest();
+    const token = request.headers.authorization?.split(' ')[1];
+
+    // CHECAR TOKEN
+    if (!token || token !== '123456') {
+      throw new UnauthorizedException('Usuário não logado');
+    }
+    console.log('Your token: ', token);
     return next.handle();
   }
 }
