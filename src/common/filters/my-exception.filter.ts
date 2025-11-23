@@ -1,12 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   ArgumentsHost,
   BadRequestException,
   Catch,
   ExceptionFilter,
+  ForbiddenException,
   UnauthorizedException,
 } from '@nestjs/common';
 
-@Catch(BadRequestException, UnauthorizedException)
+@Catch(BadRequestException, UnauthorizedException, ForbiddenException)
 export class MyExceptionFilter<T extends BadRequestException>
   implements ExceptionFilter
 {

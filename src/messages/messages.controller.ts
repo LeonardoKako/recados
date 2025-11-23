@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { MessagesService } from './messages.service';
@@ -15,8 +16,10 @@ import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
+import { IsAdminGuard } from 'src/common/guards/is-admin.guard';
 
 @UseInterceptors(AuthTokenInterceptor)
+@UseGuards(IsAdminGuard)
 @Controller('messages')
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
@@ -24,7 +27,7 @@ export class MessagesController {
   @Get()
   async findAll(@Query() pagintanionDto: PaginationDto) {
     const message = await this.messagesService.findAll(pagintanionDto);
-    // return message;
+    return message;
 
     throw new BadRequestException('Mensagem');
   }

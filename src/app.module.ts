@@ -31,12 +31,12 @@ import { MyExceptionFilter } from './common/filters/my-exception.filter';
   controllers: [AppController],
   providers: [AppService, { provide: APP_FILTER, useClass: MyExceptionFilter }],
 })
-export class AppModule {}
-// export class AppModule implements NestModule {
-//   configure(consumer: MiddlewareConsumer) {
-//     consumer.apply(SimpleMiddleware).forRoutes({
-//       path: '*',
-//       method: RequestMethod.ALL,
-//     });
-//   }
-// }
+// export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(SimpleMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
+  }
+}
